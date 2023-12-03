@@ -4,25 +4,24 @@ import { SlCalender } from "react-icons/sl";
 import { WiTime3 } from "react-icons/wi";
 import { IoLocationSharp } from "react-icons/io5";
 import { HiOutlineTicket } from "react-icons/hi2";
-import image from "@/Assats/THREE NADA MAIBANNER.jpg";
 import { data } from "./data";
 
 
+export function formatDate(isoDate: string): string {
+    const date = new Date(isoDate);
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options as any).format(date);
+    return formattedDate.replace(/\s/g, ''); // Remove spaces for the desired format
+}
+
+export function formatTime(isoDate: string): string {
+    const date = new Date(isoDate);
+    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const formattedTime = new Intl.DateTimeFormat('en-US', options  as any).format(date);
+    return formattedTime;
+}
 function Event() {
 
-    function formatDate(isoDate: string): string {
-        const date = new Date(isoDate);
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
-        const formattedDate = new Intl.DateTimeFormat('en-US', options as any).format(date);
-        return formattedDate.replace(/\s/g, ''); // Remove spaces for the desired format
-    }
-
-    function formatTime(isoDate: string): string {
-        const date = new Date(isoDate);
-        const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-        const formattedTime = new Intl.DateTimeFormat('en-US', options  as any).format(date);
-        return formattedTime;
-    }
 
   return (
     <div>
@@ -30,7 +29,7 @@ function Event() {
         <div className="">
           <div className="md:flex md:flex-row xl:mx-6">
             {data.map(item => (    
-            <div key={item._id} className="flex flex-col my-6 justify-center bg-stone-900  mx-4 md:w-[50vw]  xl:w-[33vw]">
+            <div key={item._id} className="flex flex-col my-6  bg-stone-900  mx-4 md:w-[50vw]  xl:w-[33vw]">
               <Image src={item.eventImage[0]} width="0" height="0" className="w-full" alt="" />
               <div className="flex flex-row items-center justify-between mt-4 px-4">
                 <div>

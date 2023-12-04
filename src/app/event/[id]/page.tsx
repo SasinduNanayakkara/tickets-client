@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import image from "@/Assats/THREE NADA MAIBANNER.jpg";
 import Image from "next/image";
 import { IoLocationSharp } from "react-icons/io5";
@@ -7,8 +8,40 @@ import { SlCalender } from "react-icons/sl";
 import { WiTime3 } from "react-icons/wi";
 import { HiOutlineTicket } from "react-icons/hi2";
 import {data} from "@/Components/data";
+import { formatDate, formatTime } from "@/Utils/validations";
 
 function SingleEventPage() {
+  const [dates, setDates] = useState([{
+    value:"", label: ""
+  }]);
+  const [times, setTimes] = useState([{
+    value:"", label: ""
+  }]);
+  const [tickets, setTickets] = useState([{
+    value:"", label: ""
+  }]);
+
+  useEffect(() => {
+    const formattedDates = data[0].eventDate.map(date => (
+      {
+        value:formatDate(date),
+        label: formatDate(date)
+      }
+    ));
+    const formattedTime = data[0].eventDate.map(time => ({
+      value: formatTime(time),
+      label: formatTime(time)
+    }));
+    const ticketPrice = data[0].ticketPrice.map(price => ({
+      value: price.ticketPrice as unknown as string,
+      label: price.ticketPrice as unknown as string
+    }));
+    setDates(formattedDates);
+    setTimes(formattedTime);
+    setTickets(ticketPrice);
+  },[]);
+
+
   return (
     <div>
       <div className="h-5/6">
@@ -41,15 +74,10 @@ function SingleEventPage() {
               Select Date
             </span>
             <Select
-              defaultValue="lucy"
+              defaultValue="Select Date"
               // onChange={handleChange}
               className="w-full"
-              options={[
-                
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
-                { value: "disabled", label: "Disabled", disabled: true },
-              ]}
+              options={dates}
             />
           </div>
           <div className="w-3/4">
@@ -58,15 +86,10 @@ function SingleEventPage() {
               Select Time
             </span>
             <Select
-              defaultValue="lucy"
+              defaultValue="Select Time"
               // onChange={handleChange}
               className="w-full"
-              options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
-                { value: "disabled", label: "Disabled", disabled: true },
-              ]}
+              options={times}
             />
           </div>
           <div className="w-3/4">
@@ -75,15 +98,10 @@ function SingleEventPage() {
               Select Ticket Price
             </span>
             <Select
-              defaultValue="lucy"
+              defaultValue="Select ticket price"
               // onChange={handleChange}
               className="w-full"
-              options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
-                { value: "disabled", label: "Disabled", disabled: true },
-              ]}
+              options={tickets}
             />
           </div>
           <div className="w-3/4">
@@ -92,14 +110,15 @@ function SingleEventPage() {
               Select Ticket Quantity
             </span>
             <Select
-              defaultValue="lucy"
+              defaultValue="Select ticket quantity"
               // onChange={handleChange}
               className="w-full"
               options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
-                { value: "disabled", label: "Disabled", disabled: true },
+                { value: 1, label: 1 },
+                { value: 2, label: 2 },
+                { value: 3, label: 3 },
+                { value: 4, label: 4 },
+                { value: 5, label: 5 },
               ]}
             />
           </div>

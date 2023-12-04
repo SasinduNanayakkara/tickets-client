@@ -5,21 +5,9 @@ import { WiTime3 } from "react-icons/wi";
 import { IoLocationSharp } from "react-icons/io5";
 import { HiOutlineTicket } from "react-icons/hi2";
 import { data } from "./data";
+import {formatDate, formatTime} from "@/Utils/validations"
 
 
-export function formatDate(isoDate: string): string {
-    const date = new Date(isoDate);
-    const options = { day: 'numeric', month: 'short', year: 'numeric' };
-    const formattedDate = new Intl.DateTimeFormat('en-US', options as any).format(date);
-    return formattedDate.replace(/\s/g, ''); // Remove spaces for the desired format
-}
-
-export function formatTime(isoDate: string): string {
-    const date = new Date(isoDate);
-    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-    const formattedTime = new Intl.DateTimeFormat('en-US', options  as any).format(date);
-    return formattedTime;
-}
 function Event() {
 
 

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Notification from '@/Components/Notification';
 import Footer from "@/Components/Footer";
 import Navbar from '@/Components/Navbar';
 

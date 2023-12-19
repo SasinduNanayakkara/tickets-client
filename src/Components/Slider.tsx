@@ -27,8 +27,9 @@ const data = [
   },
 ];
 
-function Slider() {
+function Slider({images}) {
   const [currentSlide, setCurrentSlide] = useState(0);
+console.log('slide images', images);
 
   // useEffect(() => {
   //     const interval= setInterval(() => {
@@ -40,12 +41,15 @@ function Slider() {
   return (
     <div className="relative">
       <Carousel autoplay autoplaySpeed={3000}>
-        {data.map((item: any) => (
+        {images?.map((item: any) => (
           <div key={item.id}>
             <Image
               src={item.image}
               alt=""
+              width='0'
+              height='0'
               className="w-full md:h-[calc(100vh-10rem)]"
+              unoptimized
             />
           </div>
         ))}

@@ -6,37 +6,17 @@ import image from "@/Assats/THREE NADA MAIBANNER.jpg";
 import image1 from "@/Assats/DES 03 MAIN.jpg";
 import image2 from "@/Assats/parinamaya new mainbanner.jpg";
 import image3 from "@/Assats/ada hamu wemuda new MAINBANNER VOL 02.jpg";
+import { Slider, SliderType } from "@/app/Types/Slider";
 
 const { Search } = Input;
-const data = [
-  {
-    id: 1,
-    image: image,
-  },
-  {
-    id: 2,
-    image: image1,
-  },
-  {
-    id: 3,
-    image: image2,
-  },
-  {
-    id: 4,
-    image: image3,
-  },
-];
 
-function Slider({images}) {
+interface ImageProps {
+  images: Slider[];
+}
+
+function Slider({images}: ImageProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 console.log('slide images', images);
-
-  // useEffect(() => {
-  //     const interval= setInterval(() => {
-  //         setCurrentSlide(prev=> (prev === data.length -1 ? 0 : prev + 1));
-  //     }, 2000);
-  //     return () => clearInterval(interval);
-  // },[]);
 
   return (
     <div className="relative">

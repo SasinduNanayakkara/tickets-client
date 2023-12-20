@@ -5,9 +5,14 @@ import { SlCalender } from "react-icons/sl";
 import { WiTime3 } from "react-icons/wi";
 import { IoLocationSharp } from "react-icons/io5";
 import { HiOutlineTicket } from "react-icons/hi2";
-import {formatDate, formatTime} from "@/Utils/validations"
+import {formatDate, formatTime} from "@/Utils/validations";
+import { Event } from "@/app/Types/Events";
 
-function Event({events}) {
+interface EventProps {
+  events: Event[];
+}
+
+function Event({events}: EventProps) {
   console.log("Events events ", events);
   
   return (

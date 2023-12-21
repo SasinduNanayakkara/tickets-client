@@ -11,7 +11,7 @@ function Categories() {
   return (
     <div className="flex flex-col xl:flex-row xl:gap-10 items-center justify-center">
       <div className="flex items-center flex-row gap-4 xl:gap-10 mt-10 md:mt-28 justify-center">
-        <Link href="/events/musical">
+        <Link href="/events/Musical">
         <div className="flex flex-col items-center justify-center gap-2 font-bold">
           <div className="text-4xl border-2 border-[#E50914] p-6 md:p-8 rounded-xl text-[#E50914] hover:border-white hover:text-white">
             <FaMusic />
@@ -20,7 +20,7 @@ function Categories() {
         </div>
         </Link>
 
-        <Link href="/events/drama">
+        <Link href="/events/Drama">
         <div className="flex flex-col items-center justify-center gap-2 font-bold">
           <div className="text-4xl border-2 border-[#E50914] p-6 md:p-8 rounded-xl text-[#E50914] hover:border-white hover:text-white">
             <GiDramaMasks />
@@ -28,7 +28,7 @@ function Categories() {
           <span className="hover:text-[#E50914] xl:text-xl">Drama</span>
         </div>
         </Link>
-        <Link href="/events/comedy">
+        <Link href="/events/Comedy">
         <div className="flex flex-col items-center justify-center gap-2 font-bold">
           <div className="text-4xl border-2 border-[#E50914] p-6 md:p-8 rounded-xl text-[#E50914] hover:border-white hover:text-white">
             <GiMicrophone />
@@ -38,7 +38,7 @@ function Categories() {
         </Link>
       </div >
       <div className="flex items-center flex-row gap-4 xl:gap-10 mt-10 md:mt-28 justify-center">
-        <Link href="/events/exhibition">
+        <Link href="/events/Exhibition">
         <div className="flex flex-col items-center justify-center gap-2 font-bold">
           <div className="text-4xl border-2 border-[#E50914] p-6 md:p-8 rounded-xl text-[#E50914] hover:border-white hover:text-white">
             <GiVikingLonghouse />
@@ -46,7 +46,7 @@ function Categories() {
           <span className="hover:text-[#E50914] xl:text-xl">Exhibition</span>
         </div>
         </Link>
-        <Link href="/events/sports">
+        <Link href="/events/Sports">
         <div className="flex flex-col items-center justify-center gap-2 font-bold">
           <div className="text-4xl border-2 border-[#E50914] p-6 md:p-8 rounded-xl text-[#E50914] hover:border-white hover:text-white">
             <GiTrophyCup />
@@ -54,7 +54,7 @@ function Categories() {
           <span className="hover:text-[#E50914] xl:text-xl">Sports</span>
         </div>
         </Link>
-        <Link href="/events/other">
+        <Link href="/events/Other">
         <div className="flex flex-col items-center justify-center gap-2 font-bold">
           <div className="text-4xl border-2 border-[#E50914] p-6 md:p-8 rounded-xl text-[#E50914] hover:border-white hover:text-white">
             <BsListStars />

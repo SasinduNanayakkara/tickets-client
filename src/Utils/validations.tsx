@@ -21,3 +21,17 @@ export   const validatePhoneNumber = (number:string) => {
     const phoneRegex = /^[0-9]{10}$/;
     return phoneRegex.test(number);
   };
+
+export const validatePassword = (password: string): boolean => {
+    const lowercaseRegex = /[a-z]/;
+    const uppercaseRegex = /[A-Z]/;
+    const digitRegex = /\d/;
+    const specialSymbolRegex = /[!@#$%^&*()-=_+{};':"\\|,.<>?/]/;
+  
+    const hasLowercase = lowercaseRegex.test(password);
+    const hasUppercase = uppercaseRegex.test(password);
+    const hasDigit = digitRegex.test(password);
+    const hasSpecialSymbol = specialSymbolRegex.test(password);
+  
+    return hasLowercase && hasUppercase && hasDigit && hasSpecialSymbol;
+  }

@@ -1,10 +1,24 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import Link from "next/link";
+import { loginUser } from "../api/Users";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signIn = async () => {
+    try {
+      const result = await loginUser(email, password);
+      console.log(result);
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="min-h-[calc(100vh-10rem)] md:min-h-[calc(100vh-16rem)]">
       <div className="flex flex-col md:flex-row items-center justify-center w-full md:gap-24 md:mt-12">
@@ -14,12 +28,12 @@ function Login() {
           </div>
           <div className="flex flex-col w-3/4 gap-3 mt-8">
             <span className="text-lg font-semibold">Email</span>
-            <Input placeholder="Email" className="md:h-10" />
+            <Input placeholder="Email" onChange={(e) => setEmail(e.target.value)} className="md:h-10" />
           </div>
           <div className="flex flex-col w-3/4 gap-3 mt-6">
             <span className="text-lg font-semibold">Password</span>
             {typeof window !== "undefined" && (
-              <Input.Password placeholder="Password" className="md:h-10" />
+              <Input.Password placeholder="Password" onChange={(e) => setPassword(e.target.value)} className="md:h-10" />
             )}
           </div>
           <div className="mt-4">
@@ -28,7 +42,7 @@ function Login() {
             </span>
           </div>
           <div className="w-full mt-8">
-            <button className="gap-2 w-full text-center bg-[#E50914] rounded-b-lg py-3 mt-2 font-extrabold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300">
+            <button onClick={() => signIn()} className="gap-2 w-full text-center bg-[#E50914] rounded-b-lg py-3 mt-2 font-extrabold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300">
               {" "}
               Login
             </button>

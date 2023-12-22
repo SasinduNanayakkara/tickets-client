@@ -4,6 +4,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import Menu from './Menu';
 
 function Navbar() {
+  // const user = localStorage.getItem('username') != '' ?  true: false;
   const user = false;
   return (
     <div className='h-12 text-white md:font-bold px-8 flex items-center justify-between border-b-2 border-b-[#E50914] uppercase md:h-20 lg:px-20 xl:px-30'>

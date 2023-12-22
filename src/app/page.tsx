@@ -14,7 +14,6 @@ export default function Home() {
   useEffect(() => {
     const getTokendata = async () => {
       const result = await getToken();
-      localStorage.setItem('accessToken', result);
       console.log(result, "token");
       const storedAccessToken = localStorage.getItem('accessToken');
       if (storedAccessToken) {

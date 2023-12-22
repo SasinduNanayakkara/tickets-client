@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import Link from "next/link";
-import { loginUser } from "../api/Users";
+import { getUserById, loginUser } from "../api/Users";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,6 +12,12 @@ function Login() {
   const signIn = async () => {
     try {
       const result = await loginUser(email, password);
+      if (result) {
+        const user = await getUserById(result.userId as string);
+        localStorage.setItem("username", user.firstName + " " + user.lastName);
+        console.log("user data ", user);
+        
+      }
       console.log(result);
     }
     catch(err) {

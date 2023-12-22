@@ -24,6 +24,9 @@ export const getToken = async () => {
             userId: "",
             roles: []
         });
+        if (result) {
+        localStorage.setItem('accessToken', result.data.data.accessToken);
+        }
         return result.data.data;
     }
     catch(err) {

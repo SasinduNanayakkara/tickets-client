@@ -29,3 +29,13 @@ export const getEventTypeData = async (eventType: string) => {
     }
 }
 
+export const getEventsById = async (id: string) => {
+    try {
+        const result = await axios.get(`${baseUrl}/events/${id}`);
+        return result.data.data;
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+

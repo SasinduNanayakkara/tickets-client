@@ -7,6 +7,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { HiOutlineTicket } from "react-icons/hi2";
 import {formatDate, formatTime} from "@/Utils/validations";
 import { Event } from "@/app/Types/Events";
+import { useRouter } from "next/navigation";
 
 interface EventProps {
   events: Event[];
@@ -14,11 +15,15 @@ interface EventProps {
 
 function Event({events}: EventProps) {
   console.log("Events events ", events);
+
+  const router = useRouter();
+
+  const handleBuy = async () => {
+    
+  }
   
   return (
     <div>
-      <div className="">
-        <div className="">
           <div className="md:flex md:flex-wrap xl:mx-6 md:items-center md:justify-center">
             {events?.map((item: any) => (    
             <div key={item._id} className="flex flex-col my-6  bg-stone-900  mx-4 md:w-[50vw]  xl:w-[28vw]">
@@ -38,12 +43,10 @@ function Event({events}: EventProps) {
                     ))}
                 </div>
               </div>
-              <button className="flex gap-2 items-center justify-center bg-[#E50914] rounded-b-lg py-3 mt-2 font-bold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300"><HiOutlineTicket /> buy tickets</button>
+              <button onClick={() => router.push(`/event/${item._id}`)} className="flex gap-2 items-center justify-center bg-[#E50914] rounded-b-lg py-3 mt-2 font-bold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300"><HiOutlineTicket /> buy tickets</button>
             </div>
             ))}
           </div>
-        </div>
-      </div>
     </div>
   );
 }

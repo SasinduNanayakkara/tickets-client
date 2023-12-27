@@ -25,9 +25,9 @@ export const getToken = async () => {
             roles: []
         });
         if (result) {
-        localStorage.setItem('accessToken', result.data.data.accessToken);
+            console.log("access token #### - ", result.data.data);
+            return result.data.data;
         }
-        return result.data.data;
     }
     catch(err) {
         console.log(err);

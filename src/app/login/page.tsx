@@ -4,14 +4,16 @@ import { Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import Link from "next/link";
 import { getUserById, loginUser } from "../api/Users";
+import { useGlobalContext } from "../Context/Store";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {accessToken} = useGlobalContext();
 
   const signIn = async () => {
     try {
-      const result = await loginUser(email, password);
+      const result = await loginUser(email, password, accessToken);
       if (result) {
         const user = await getUserById(result.userId as string);
         localStorage.setItem("username", user.firstName + " " + user.lastName);

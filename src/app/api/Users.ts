@@ -3,9 +3,10 @@ import { User } from "../Types/Users";
 import { baseUrl } from "./Events";
 import { jwtDecode } from "jwt-decode";
 
-export const createUser = async (user: User) => {
+export const createUser = async (user: User, accessToken: string) => {
     try {
-        const result = await axios.post(`${baseUrl}/users`, {user});
+        const result = await axios.post(`${baseUrl}/users`, {user}, 
+        {headers: {Authorization: `Bearer ${accessToken}`}});
         return result;
     }
     catch(err) {
@@ -13,9 +14,9 @@ export const createUser = async (user: User) => {
     }
 }
 
-export const loginUser = async (email: string, password: string) => {
+export const loginUser = async (email: string, password: string, accessToken: string) => {
     try {
-        const result = await axios.post(`${baseUrl}/auth/login`, {email, password});
+        const result = await axios.post(`${baseUrl}/auth/login`, {email, password}, {headers: {Authorization: `Bearer ${accessToken}`}});
         if (result) {
             const decodedToken = jwtDecode(result.data.data.accessToken);
             const userId = decodedToken.sub;

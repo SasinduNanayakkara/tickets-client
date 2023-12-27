@@ -4,6 +4,7 @@ import { Input } from "antd";
 import React, { useState } from "react";
 import { User } from "../Types/Users";
 import { createUser } from "../api/Users";
+import { useGlobalContext } from "../Context/Store";
 
 function Register() {
 
@@ -15,12 +16,13 @@ function Register() {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const {accessToken} = useGlobalContext();
 
   const userRegister = async () => {
     if (password === confirmPassword && validatePassword(password)) {
         if (validateEmail(email) && validatePhoneNumber(phone)) {
 
-          const result = await createUser({firstName, lastName, email, phone, NIC, address, password});
+          const result = await createUser({firstName, lastName, email, phone, NIC, address, password}, accessToken);
           console.log("user create result - ", result);
         }
         else{

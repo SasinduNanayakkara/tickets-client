@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Footer from "@/Components/Footer";
 import Navbar from '@/Components/Navbar';
-
+import { GlobalContextProvider } from './Context/Store';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -20,9 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {/* <Notification/> */}
+        <GlobalContextProvider>
         <Navbar/>
         {children}
         <Footer/>
+        </GlobalContextProvider>
       </body>
     </html>
   )

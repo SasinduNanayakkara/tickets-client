@@ -3,10 +3,10 @@ import axios from 'axios';
 // export const baseUrl = 'https://tickets-backend-sasindunanayakkara.vercel.app/api/v1';
 export const baseUrl = "http://localhost:5000/api/v1";
 
-export const getEvents = async () => {
+export const getEvents = async (accessToken: string) => {
     try {
         const result = await axios.get(`${baseUrl}/events`, {headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${accessToken}`
         }});
         return result.data.data;
     }
@@ -15,11 +15,11 @@ export const getEvents = async () => {
     }
 }
 
-export const getEventTypeData = async (eventType: string) => {
+export const getEventTypeData = async (eventType: string, accessToken: string) => {
     try {
         const result = await axios.get(`${baseUrl}/events/eventType/${eventType}`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${accessToken}`
             }
         });
         return result.data.data

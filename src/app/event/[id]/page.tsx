@@ -12,6 +12,7 @@ import { formatDate, formatTime } from "@/Utils/validations";
 import { getEventsById } from "@/app/api/Events";
 import { Event } from "@/app/Types/Events";
 import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/app/Context/Store";
 
 function SingleEventPage({
   params: {id}, 
@@ -21,6 +22,7 @@ function SingleEventPage({
 
   const [eventData, setEventData] = useState<Event>();
   const router = useRouter();
+  const {userId} = useGlobalContext();
 
   const [dates, setDates] = useState([{
     value:"", label: ""
@@ -70,6 +72,12 @@ function SingleEventPage({
 
   const handleTicketBuy = async () => {
     //if user already login navigate to payment page directly
+    if(userId != "") {
+      router.push("/tickets");
+    }
+    else {
+      router.push("/login?tickets=true");
+    }
     //if user not logged in navigate to login page.
   }
 

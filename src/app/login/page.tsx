@@ -5,21 +5,33 @@ import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import Link from "next/link";
 import { getUserById, loginUser } from "../api/Users";
 import { useGlobalContext } from "../Context/Store";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {accessToken, setAccessToken, setUserId, setRole} = useGlobalContext();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const search = searchParams.get('tickets')
 
   const signIn = async () => {
     try {
       const result = await loginUser(email, password, accessToken);
       if (result) {
+        setUserId(result.userId as string);
+        setRole(result.roles as string);
+        setAccessToken(result.accessToken);
+        console.log("query - ", search);
         const user = await getUserById(result.userId as string);
         console.log("user data ", user);
-        router.push("/tickets");
+        
+        if (search != '') {
+          router.push("/tickets");
+        }
+        else {
+          router.push("/");
+        }
       }
       console.log(result);
     }

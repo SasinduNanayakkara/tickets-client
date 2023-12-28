@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { User } from "../Types/Users";
 import { createUser } from "../api/Users";
 import { useGlobalContext } from "../Context/Store";
+import { useRouter } from "next/navigation";
 
 function Register() {
 
@@ -17,6 +18,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const {accessToken} = useGlobalContext();
+  const router = useRouter(); 
 
   const userRegister = async () => {
     if (password === confirmPassword && validatePassword(password)) {
@@ -24,6 +26,9 @@ function Register() {
 
           const result = await createUser({firstName, lastName, email, phone, NIC, address, password}, accessToken);
           console.log("user create result - ", result);
+          if (result) {
+            router.push("/login");
+          }
         }
         else{
           console.log("password or phone not valid");

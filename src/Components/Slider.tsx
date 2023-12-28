@@ -16,6 +16,7 @@ interface ImageProps {
 
 function Slider({images}: ImageProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  images.shift();
 console.log('slide images', images);
 
   return (

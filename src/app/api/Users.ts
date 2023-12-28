@@ -23,7 +23,7 @@ export const loginUser = async (email: string, password: string, accessToken: st
             const roles =  decodedToken.roles[0]
             console.log("user Id ", roles);
             
-            return {userId, roles};
+            return {userId: userId, roles: roles, accessToken: result.data.data.accessToken};
         }
     }
     catch (err) {

@@ -9,8 +9,19 @@ import { WiTime3 } from "react-icons/wi";
 import { HiOutlineTicket } from "react-icons/hi2";
 import {data} from "@/Components/data";
 import { formatDate, formatTime } from "@/Utils/validations";
+import { getEventsById } from "@/app/api/Events";
+import { Event } from "@/app/Types/Events";
+import { useRouter } from "next/navigation";
 
-function SingleEventPage() {
+function SingleEventPage({
+  params: {id}, 
+}: {
+  params: {id: string}
+}) {
+
+  const [eventData, setEventData] = useState<Event>();
+  const router = useRouter();
+
   const [dates, setDates] = useState([{
     value:"", label: ""
   }]);
@@ -21,42 +32,64 @@ function SingleEventPage() {
     value:"", label: ""
   }]);
 
+  console.log("id - ", id);
+  
+
   useEffect(() => {
-    const formattedDates = data[0].eventDate.map(date => (
-      {
-        value:formatDate(date),
-        label: formatDate(date)
+    const getEventData = async () => {
+      try {
+        const event:Event = await getEventsById(id);
+        if (event) {
+          setEventData(event);
+          const formattedDates = event.eventDate.map((date: any) => (
+            {
+              value:formatDate(date),
+              label: formatDate(date)
+            }
+          ));
+          const formattedTime = event.eventDate.map((time: any) => ({
+            value: formatTime(time),
+            label: formatTime(time)
+          }));
+          const ticketPrice = event.ticketPrice.map((price: any) => ({
+            value: price.ticketPrice as unknown as string,
+            label: price.ticketPrice as unknown as string
+          }));
+          setDates(formattedDates);
+          setTimes(formattedTime);
+          setTickets(ticketPrice);
+        }
       }
-    ));
-    const formattedTime = data[0].eventDate.map(time => ({
-      value: formatTime(time),
-      label: formatTime(time)
-    }));
-    const ticketPrice = data[0].ticketPrice.map(price => ({
-      value: price.ticketPrice as unknown as string,
-      label: price.ticketPrice as unknown as string
-    }));
-    setDates(formattedDates);
-    setTimes(formattedTime);
-    setTickets(ticketPrice);
+      catch(err) {
+        console.log(err);
+      }
+    }
+    getEventData()
+    
   },[]);
 
+  const handleTicketBuy = async () => {
+    //if user already login navigate to payment page directly
+    //if user not logged in navigate to login page.
+  }
+
+  console.log("single event ", eventData);
 
   return (
     <div>
       <div className="h-5/6">
-        <Image src={image} alt="" className="w-full md:h-[calc(100vh-10rem)]" />
+        <Image src={eventData?.eventImage[0] as string} width="0" height="0" alt="" unoptimized className="w-full md:h-[calc(100vh-10rem)]" />
       </div>
       <div className="px-3 xl:flex xl:flex-row xl:gap-10">
         <div className="xl:w-2/3">
           <div className="flex items-center justify-center mt-4 xl:mt-10">
             <span className="text-3xl xl:text-5xl uppercase font-bold">
-              {data[0].eventName}
+              {eventData?.eventName}
             </span>
           </div>
           <div className="mt-4 text-justify px-2 xl:mt-10 xl:px-10 xl:text-lg">
             <p>
-             {data[0].description}
+             {eventData?.description}
             </p>
           </div>
         </div>
@@ -74,6 +107,7 @@ function SingleEventPage() {
               Select Date
             </span>
             <Select
+              aria-required
               defaultValue="Select Date"
               // onChange={handleChange}
               className="w-full"
@@ -90,6 +124,7 @@ function SingleEventPage() {
               // onChange={handleChange}
               className="w-full"
               options={times}
+              aria-required
             />
           </div>
           <div className="w-3/4">
@@ -102,6 +137,7 @@ function SingleEventPage() {
               // onChange={handleChange}
               className="w-full"
               options={tickets}
+              aria-required
             />
           </div>
           <div className="w-3/4">
@@ -120,9 +156,10 @@ function SingleEventPage() {
                 { value: 4, label: 4 },
                 { value: 5, label: 5 },
               ]}
+              aria-required
             />
           </div>
-          <button className="flex gap-2 items-center w-full justify-center bg-[#E50914] rounded-b-lg py-3 mt-2 font-bold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300"><HiOutlineTicket /> buy tickets</button>
+          <button onClick={() => handleTicketBuy()} className="flex gap-2 items-center w-full justify-center bg-[#E50914] rounded-b-lg py-3 mt-2 font-bold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300"><HiOutlineTicket /> buy tickets</button>
         </div>
       </div>
     </div>

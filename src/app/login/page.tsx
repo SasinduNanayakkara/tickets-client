@@ -5,20 +5,21 @@ import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import Link from "next/link";
 import { getUserById, loginUser } from "../api/Users";
 import { useGlobalContext } from "../Context/Store";
+import { useRouter } from "next/navigation";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {accessToken} = useGlobalContext();
+  const {accessToken, setAccessToken, setUserId, setRole} = useGlobalContext();
+  const router = useRouter();
 
   const signIn = async () => {
     try {
       const result = await loginUser(email, password, accessToken);
       if (result) {
         const user = await getUserById(result.userId as string);
-        localStorage.setItem("username", user.firstName + " " + user.lastName);
         console.log("user data ", user);
-        
+        router.push("/tickets");
       }
       console.log(result);
     }

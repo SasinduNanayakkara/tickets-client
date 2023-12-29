@@ -21,6 +21,9 @@ console.log('slide images', images);
 
   return (
     <div className="relative">
+      {images?.length > 0 ? 
+      (
+        <>
       <Carousel autoplay autoplaySpeed={3000}>
         {images?.map((item: any) => (
           <div key={item.id}>
@@ -45,6 +48,11 @@ console.log('slide images', images);
           //   onSearch={onSearch}
         />
       </div>
+        </>
+      ) : (
+        <div>No data</div>
+      )
+      }
     </div>
   );
 }

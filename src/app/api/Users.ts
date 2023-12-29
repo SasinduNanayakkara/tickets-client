@@ -28,6 +28,7 @@ export const loginUser = async (email: string, password: string, accessToken: st
     }
     catch (err) {
         console.log(err);
+        return {};
     }
 }
 

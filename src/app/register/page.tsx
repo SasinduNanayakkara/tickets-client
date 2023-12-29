@@ -1,6 +1,7 @@
 "use client";
 import { validateEmail, validatePassword, validatePhoneNumber } from "@/Utils/validations";
-import { Input } from "antd";
+import { Input, notification } from "antd";
+import { CloseCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { User } from "../Types/Users";
 import { createUser } from "../api/Users";
@@ -19,6 +20,15 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const {accessToken} = useGlobalContext();
   const router = useRouter(); 
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (messageTitle: string, description: string, type:string) => {
+    api.open({
+      message: messageTitle,
+      description: description,
+      icon: type === 'success' ? <CheckCircleOutlined /> : <CloseCircleOutlined />
+  })
+  }
 
   const userRegister = async () => {
     if (password === confirmPassword && validatePassword(password)) {
@@ -27,14 +37,17 @@ function Register() {
           const result = await createUser({firstName, lastName, email, phone, NIC, address, password}, accessToken);
           console.log("user create result - ", result);
           if (result) {
+            openNotification('Registration Successful', '', 'success');
             router.push("/login");
           }
         }
         else{
+          openNotification('password or phone not valid', '', 'error');
           console.log("password or phone not valid");
         }
     }
     else {
+      openNotification('password not matched', '', 'error');
       console.log("password not matched");
     }
   }

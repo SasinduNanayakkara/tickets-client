@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { Input } from "antd";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { Input, notification } from "antd";
+import { CloseCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { getUserById, loginUser } from "../api/Users";
 import { useGlobalContext } from "../Context/Store";
 import { useRouter, useSearchParams } from "next/navigation";
+import NotificationBar from "@/Components/NotificationBar";
+// import openNotification from "@/Components/NotificationBar";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -13,12 +15,23 @@ function Login() {
   const {accessToken, setAccessToken, setUserId, setRole} = useGlobalContext();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const search = searchParams.get('tickets')
+  const search = searchParams.get('tickets');
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (messageTitle: string, description: string, type:string) => {
+    api.open({
+      message: messageTitle,
+      description: description,
+      icon: type === 'success' ? <CheckCircleOutlined /> : <CloseCircleOutlined />
+  })
+  }
 
   const signIn = async () => {
     try {
       const result = await loginUser(email, password, accessToken);
-      if (result) {
+      if (result?.accessToken) {
+        openNotification('Login Successful', '', 'success');
+        // {<NotificationBar notification={{messageTitle: 'Login Successful', description:'', type:'success'}} />}
         setUserId(result.userId as string);
         setRole(result.roles as string);
         setAccessToken(result.accessToken);
@@ -26,7 +39,7 @@ function Login() {
         const user = await getUserById(result.userId as string);
         console.log("user data ", user);
         
-        if (search != '') {
+        if (search === 'true') {
           router.push("/tickets");
         }
         else {
@@ -34,14 +47,17 @@ function Login() {
         }
       }
       console.log(result);
+      openNotification('Login Unsuccessful', '', 'error');
     }
     catch(err) {
-      console.log(err);
+      console.log("ddd", err);
+      openNotification('Login Unsuccessful', '', 'error');
     }
   }
 
   return (
     <div className="min-h-[calc(100vh-10rem)] md:min-h-[calc(100vh-16rem)]">
+      {contextHolder}
       <div className="flex flex-col md:flex-row items-center justify-center w-full md:gap-24 md:mt-12">
         <div className="bg-stone-900 flex flex-col items-center justify-center m-5 w-11/12 md:w-5/12">
           <div className="pt-3 flex flex-col gap-4 items-center justify-center">

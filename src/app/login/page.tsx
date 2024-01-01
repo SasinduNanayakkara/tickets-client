@@ -12,11 +12,15 @@ import NotificationBar from "@/Components/NotificationBar";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {accessToken, setAccessToken, setUserId, setRole} = useGlobalContext();
+  const {accessToken, setAccessToken, setUserId, setRole, userId} = useGlobalContext();
   const router = useRouter();
   const searchParams = useSearchParams();
   const search = searchParams.get('tickets');
   const [api, contextHolder] = notification.useNotification();
+
+  if (!userId && !accessToken) {
+    router.push("/");
+  }
 
   const openNotification = (messageTitle: string, description: string, type:string) => {
     api.open({

@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import image from "@/Assats/THREE NADA MAIBANNER.jpg";
 import Image from "next/image";
 import { IoLocationSharp } from "react-icons/io5";
 import { Select } from "antd";
@@ -22,7 +21,11 @@ function SingleEventPage({
 
   const [eventData, setEventData] = useState<Event>();
   const router = useRouter();
-  const {userId} = useGlobalContext();
+  const {userId, accessToken} = useGlobalContext();
+
+  if (!userId && !accessToken) {
+    router.push("/");
+  }
 
   const [dates, setDates] = useState([{
     value:"", label: ""
@@ -40,7 +43,7 @@ function SingleEventPage({
   useEffect(() => {
     const getEventData = async () => {
       try {
-        const event:Event = await getEventsById(id);
+        const event:Event = await getEventsById(id, accessToken);
         if (event) {
           setEventData(event);
           const formattedDates = event.eventDate.map((date: any) => (

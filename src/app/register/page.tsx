@@ -18,9 +18,13 @@ function Register() {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const {accessToken} = useGlobalContext();
+  const {accessToken, userId} = useGlobalContext();
   const router = useRouter(); 
   const [api, contextHolder] = notification.useNotification();
+
+  if (!userId && !accessToken) {
+    router.push("/");
+  }
 
   const openNotification = (messageTitle: string, description: string, type:string) => {
     api.open({

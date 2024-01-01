@@ -29,9 +29,13 @@ export const getEventTypeData = async (eventType: string, accessToken: string) =
     }
 }
 
-export const getEventsById = async (id: string) => {
+export const getEventsById = async (id: string, accessToken: string) => {
     try {
-        const result = await axios.get(`${baseUrl}/events/${id}`);
+        const result = await axios.get(`${baseUrl}/events/${id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
         return result.data.data;
     }
     catch(err) {
@@ -39,3 +43,16 @@ export const getEventsById = async (id: string) => {
     }
 }
 
+export const getEventsByName = async (name: string, accessToken: string) => {
+    try {
+        const result = await axios.get(`${baseUrl}/events/eventName/${name}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        return result.data.data
+    }
+    catch(err) {
+        console.log(err);
+    }
+}

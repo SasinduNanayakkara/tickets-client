@@ -12,7 +12,7 @@ import NotificationBar from "@/Components/NotificationBar";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {accessToken, setAccessToken, setUserId, setRole, userId} = useGlobalContext();
+  const {accessToken, setAccessToken, setUserId, setRole, userId, refreshToken, setRefreshToken} = useGlobalContext();
   const router = useRouter();
   const searchParams = useSearchParams();
   const search = searchParams.get('tickets');
@@ -39,12 +39,13 @@ function Login() {
         setUserId(result.userId as string);
         setRole(result.roles as string);
         setAccessToken(result.accessToken);
+        setRefreshToken(result.refreshToken);
         console.log("query - ", search);
         const user = await getUserById(result.userId as string);
         console.log("user data ", user);
         
         if (search === 'true') {
-          router.push("/tickets");
+          router.push("/tickets"); 
         }
         else {
           router.push("/");

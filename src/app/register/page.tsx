@@ -38,11 +38,14 @@ function Register() {
     if (password === confirmPassword && validatePassword(password)) {
         if (validateEmail(email) && validatePhoneNumber(phone)) {
 
-          const result = await createUser({firstName, lastName, email, phone, NIC, address, password}, accessToken);
+          const result = await createUser(firstName, lastName, email, phone, NIC, address, password, accessToken);
           console.log("user create result - ", result);
-          if (result) {
-            openNotification('Registration Successful', '', 'success');
+          if (result?.status === 201) {
+            openNotification(result?.data.message, '', 'success');
             router.push("/login");
+          }
+          else {
+            openNotification(result?.data.message, '', 'error');
           }
         }
         else{
@@ -59,6 +62,7 @@ function Register() {
 
   return (
     <div className="xl:flex xl:items-center xl:justify-center">
+      {contextHolder}
       <div className="bg-stone-900 rounded-lg flex flex-col items-center justify-center xl:w-1/2">
         <div className="flex items-center justify-center my-5">
           <span className="text-2xl font-bold">Register To Grab Your Tickets</span>

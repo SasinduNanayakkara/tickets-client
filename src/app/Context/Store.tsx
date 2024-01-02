@@ -9,6 +9,8 @@ interface ContextProps {
     setAccessToken: Dispatch<SetStateAction<string>>
     role: string,
     setRole: Dispatch<SetStateAction<string>>
+    refreshToken: string,
+    setRefreshToken: Dispatch<SetStateAction<string>>
 };
 
 const GlobalContext = createContext<ContextProps>({
@@ -17,16 +19,19 @@ const GlobalContext = createContext<ContextProps>({
     accessToken: '',
     setAccessToken: (): string => '',
     role: '',
-    setRole: (): string => ''
+    setRole: (): string => '',
+    refreshToken: '',
+    setRefreshToken: (): string => '',
 });
 
 export const GlobalContextProvider = ({children}) => {
     const [userId, setUserId] = useState('');
     const [accessToken, setAccessToken] = useState('');
     const [role, setRole] = useState('');
+    const [refreshToken, setRefreshToken] = useState('');
 
     return (
-        <GlobalContext.Provider value={{userId, setUserId, accessToken, setAccessToken, role, setRole}}>
+        <GlobalContext.Provider value={{userId, setUserId, accessToken, setAccessToken, role, setRole, refreshToken, setRefreshToken}}>
             {children}
         </GlobalContext.Provider>
     )

@@ -6,7 +6,6 @@ import { Select } from "antd";
 import { SlCalender } from "react-icons/sl";
 import { WiTime3 } from "react-icons/wi";
 import { HiOutlineTicket } from "react-icons/hi2";
-import {data} from "@/Components/data";
 import { formatDate, formatTime } from "@/Utils/validations";
 import { getEventsById } from "@/app/api/Events";
 import { Event } from "@/app/Types/Events";
@@ -21,7 +20,16 @@ function SingleEventPage({
 
   const [eventData, setEventData] = useState<Event>();
   const router = useRouter();
-  const {userId, accessToken} = useGlobalContext();
+  const {
+    userId, 
+    accessToken, 
+    setEventId, 
+    setQuantity, 
+    setTicketPrice,
+    setLocation,
+    setDate,
+    setTime,
+  } = useGlobalContext();
 
   if (!userId && !accessToken) {
     router.push("/");
@@ -36,6 +44,7 @@ function SingleEventPage({
   const [tickets, setTickets] = useState([{
     value:"", label: ""
   }]);
+
 
   console.log("id - ", id);
   
@@ -63,6 +72,8 @@ function SingleEventPage({
           setDates(formattedDates);
           setTimes(formattedTime);
           setTickets(ticketPrice);
+          setLocation(event?.venue as string);
+          setEventId(event?._id as string);
         }
       }
       catch(err) {
@@ -76,6 +87,7 @@ function SingleEventPage({
   const handleTicketBuy = async () => {
     //if user already login navigate to payment page directly
     if(userId != "") {
+
       router.push("/tickets");
     }
     else {
@@ -110,7 +122,7 @@ function SingleEventPage({
               <IoLocationSharp />
               Select venue / Theatre
             </span>
-            <span className="text-lg font-bold xl:text-xl">{data[0].venue}</span>
+            <span className="text-lg font-bold xl:text-xl">{eventData?.venue}</span>
           </div>
           <div className="w-3/4">
             <span className="flex items-center gap-2 justify-center mb-2 text-[#E50914]">
@@ -120,9 +132,9 @@ function SingleEventPage({
             <Select
               aria-required
               defaultValue="Select Date"
-              // onChange={handleChange}
               className="w-full"
               options={dates}
+              onChange={(selectedOption) => setDate(selectedOption)}
             />
           </div>
           <div className="w-3/4">
@@ -132,10 +144,10 @@ function SingleEventPage({
             </span>
             <Select
               defaultValue="Select Time"
-              // onChange={handleChange}
               className="w-full"
               options={times}
               aria-required
+              onChange={((selectedOption) => setTime(selectedOption))}
             />
           </div>
           <div className="w-3/4">
@@ -145,10 +157,10 @@ function SingleEventPage({
             </span>
             <Select
               defaultValue="Select ticket price"
-              // onChange={handleChange}
               className="w-full"
               options={tickets}
               aria-required
+              onChange={(selectedOption) => setTicketPrice(selectedOption)}
             />
           </div>
           <div className="w-3/4">
@@ -168,6 +180,7 @@ function SingleEventPage({
                 { value: 5, label: 5 },
               ]}
               aria-required
+              onChange={(selectedOption) => setQuantity(parseInt(selectedOption))}
             />
           </div>
           <button onClick={() => handleTicketBuy()} className="flex gap-2 items-center w-full justify-center bg-[#E50914] rounded-b-lg py-3 mt-2 font-bold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300"><HiOutlineTicket /> buy tickets</button>

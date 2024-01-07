@@ -2,9 +2,9 @@
 import Categories from '@/Components/Categories'
 import Event from '@/Components/Event'
 import Slider from '@/Components/Slider'
-import { getEventTypeData } from '@/app/api/Events'
+import { getEventTypeData } from '@/src/app/api/Events'
 import React, { useEffect, useState } from 'react'
-import { useGlobalContext } from '@/app/Context/Store'
+import { useGlobalContext } from '@/src/app/Context/Store'
 import { useRouter } from 'next/navigation'
 import { Input } from 'antd'
 

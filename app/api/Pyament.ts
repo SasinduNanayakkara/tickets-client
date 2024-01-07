@@ -7,7 +7,7 @@ export const createPayment = async (eventId: string, ticketPrice: string, quanti
         
         const result = await axios.post(`${baseUrl}/payment`, {eventId, ticketPrice, quantity, userId});
         if (result) {
-            return result;
+             return result;
         }
     }
     catch(err) {

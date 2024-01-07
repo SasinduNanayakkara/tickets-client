@@ -7,10 +7,10 @@ import { SlCalender } from "react-icons/sl";
 import { WiTime3 } from "react-icons/wi";
 import { HiOutlineTicket } from "react-icons/hi2";
 import { formatDate, formatTime } from "@/Utils/validations";
-import { getEventsById } from "@/app/api/Events";
-import { Event } from "@/app/Types/Events";
+import { getEventsById } from "@/src/app/api/Events";
+import { Event } from "@/src/app/Types/Events";
 import { useRouter } from "next/navigation";
-import { useGlobalContext } from "@/app/Context/Store";
+import { useGlobalContext } from "@/src/app/Context/Store";
 
 function SingleEventPage({
   params: {id}, 

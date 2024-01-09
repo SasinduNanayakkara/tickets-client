@@ -7,12 +7,23 @@ import { getUserById, loginUser } from "../api/Users";
 import { useGlobalContext } from "../Context/Store";
 import { useRouter, useSearchParams } from "next/navigation";
 import NotificationBar from "@/Components/NotificationBar";
+import { createPayment } from "../api/Pyament";
 // import openNotification from "@/Components/NotificationBar";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {accessToken, setAccessToken, setUserId, setRole, userId, refreshToken, setRefreshToken} = useGlobalContext();
+  const {
+    accessToken, 
+    setAccessToken, 
+    setUserId, 
+    setRole, 
+    userId, 
+    setRefreshToken,
+    eventId,
+    ticketPrice,
+    quantity
+  } = useGlobalContext();
   const router = useRouter();
   const searchParams = useSearchParams();
   const search = searchParams.get('tickets');
@@ -45,7 +56,10 @@ function Login() {
         console.log("user data ", user);
         
         if (search === 'true') {
-          router.push("/tickets"); 
+          // router.push("/tickets");
+          const sessionUrl = await createPayment(eventId, ticketPrice, quantity as number, result?.userId as string);
+          console.log("sessionUrl ", sessionUrl);
+          router.push(sessionUrl?.data.data as any);
         }
         else {
           router.push("/");

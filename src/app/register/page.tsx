@@ -35,9 +35,9 @@ function Register() {
   }
 
   const userRegister = async () => {
-    if (password === confirmPassword && validatePassword(password)) {
+    try {
+      if (password === confirmPassword && validatePassword(password)) {
         if (validateEmail(email) && validatePhoneNumber(phone)) {
-
           const result = await createUser(firstName, lastName, email, phone, NIC, address, password, accessToken);
           console.log("user create result - ", result);
           if (result?.status === 201) {
@@ -56,6 +56,11 @@ function Register() {
     else {
       openNotification('password not matched', '', 'error');
       console.log("password not matched");
+    }
+    }
+    catch(error) {
+      console.error("Registration error:", error);
+      openNotification("Registration failed", "", "error");
     }
   }
 

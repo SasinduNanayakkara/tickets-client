@@ -48,7 +48,7 @@ const GlobalContext = createContext<ContextProps>({
     setTime: (): string => ''
 });
 
-export const GlobalContextProvider = ({children}) => {
+export const GlobalContextProvider = ({children}: any) => {
     const [userId, setUserId] = useState('');
     const [accessToken, setAccessToken] = useState('');
     const [role, setRole] = useState('');

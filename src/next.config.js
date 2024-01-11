@@ -3,7 +3,8 @@ const nextConfig = {
         images: {
           domains: ['uploads-ssl.webflow.com',"i.ytimg.com","mytickets.lk"],
         },
-        reactStrictMode: false
+        reactStrictMode: false,
+        output: 'standalone'
 }
 
 module.exports = nextConfig

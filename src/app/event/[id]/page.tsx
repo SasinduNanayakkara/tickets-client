@@ -7,10 +7,10 @@ import { SlCalender } from "react-icons/sl";
 import { WiTime3 } from "react-icons/wi";
 import { HiOutlineTicket } from "react-icons/hi2";
 import { formatDate, formatTime } from "@/Utils/validations";
-import { getEventsById } from "@/src/app/api/Events";
-import { Event } from "@/src/app/Types/Events";
+import { getEventsById } from "@/app/api/Events";
+import { Event } from "@/app/Types/Events";
 import { useRouter } from "next/navigation";
-import { useGlobalContext } from "@/src/app/Context/Store";
+import { useGlobalContext } from "@/app/Context/Store";
 
 function SingleEventPage({
   params: {id}, 
@@ -85,15 +85,18 @@ function SingleEventPage({
   },[]);
 
   const handleTicketBuy = async () => {
-    //if user already login navigate to payment page directly
-    if(userId != "") {
-
-      router.push("/tickets");
+    try {
+      if(userId != "") {
+  
+        router.push("/tickets");
+      }
+      else {
+        router.push("/login?tickets=true");
+      }
     }
-    else {
-      router.push("/login?tickets=true");
+    catch(error) {
+      console.log(error);
     }
-    //if user not logged in navigate to login page.
   }
 
   console.log("single event ", eventData);

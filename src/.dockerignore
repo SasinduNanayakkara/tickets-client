@@ -1,0 +1,9 @@
+# Exclude development-specific files and directories
+node_modules/
+.dockerignore
+.git/
+.gitignore
+
+# Exclude Next.js output directories
+.next/
+out/

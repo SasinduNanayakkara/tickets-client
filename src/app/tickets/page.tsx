@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { getToken } from "../api/Token";
 import { useGlobalContext } from "./../Context/Store";
 import { updatePaymentStatus } from "../api/Pyament";
-import { getTicketData } from "../api/Ticket";
+import { getTicketData, ticketDownload } from "../api/Ticket";
 import Image from "next/image";
 import { useQRCode } from "next-qrcode";
 import Loading from "../Loading";
@@ -45,24 +45,30 @@ function Tickets() {
     };
     getData();
   }, []);
+
+  const downloadTicket = async () => {
+    const result = await ticketDownload(ticketData?.eventImage, ticketData?.paymentId?.paymentRef, ticketData?.location, ticketData?.eventId?.eventName, ticketData?.quantity, ticketData?.date, ticketData?.time, ticketData?.ticketPrice, ticketData?._id, ticketData?.paymentId?.amount, accessToken);
+    console.log(result);
+  }
+
   return (
     <div>
       {ticketData?.eventId?.eventImage[0] ? (
-        <div>
-          <div className="flex flex-col items-center justify-center my-6">
-            <span className="text-2xl font-extrabold text-[#E50914] uppercase">
+        <div className="md:flex md:flex-col md:items-center">
+          <div className="flex flex-col xl:flex-row items-center justify-center my-6">
+            <span className="text-2xl font-extrabold text-[#E50914] xl:ml-96 xl:pl-48 uppercase">
               Grab Your Digital Ticket
             </span>
-          <button className="flex gap-2 items-center justify-center bg-[#E50914] rounded-lg py-3 mt-2 px-8 font-bold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300"> Download Ticket</button>
+          <button onClick={() => downloadTicket()} className="flex gap-2 items-center justify-center xl:ml-96 bg-[#E50914] rounded-lg py-3 mt-2 px-8 font-bold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300"> Download Ticket</button>
 
           </div>
-          <div className="bg-stone-900 rounded-md mx-5">
+          <div className="bg-stone-900 rounded-md mx-5 md:w-1/3">
             <div className="relative w-full flex items-center justify-center">
               <Image
                 src={ticketData?.eventId?.eventImage[0]}
                 width="0"
                 height="0"
-                className="w-full z-10 absolute top-0 left-0"
+                className="w-full z-10 absolute top-0 left-0 h-[250px]"
                 alt=""
                 unoptimized
               />

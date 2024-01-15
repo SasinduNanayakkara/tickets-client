@@ -8,7 +8,7 @@ import { WiTime3 } from "react-icons/wi";
 import { HiOutlineTicket } from "react-icons/hi2";
 import { formatDate, formatTime } from "@/Utils/validations";
 import { getEventsById } from "@/app/api/Events";
-import { Event } from "@/app/Types/Events";
+import { Event, TicketPrice } from "@/app/Types/Events";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/app/Context/Store";
 
@@ -26,6 +26,7 @@ function SingleEventPage({
     setEventId, 
     setQuantity, 
     setTicketPrice,
+    setTicketPriceId,
     setLocation,
     setDate,
     setTime,
@@ -65,7 +66,7 @@ function SingleEventPage({
             value: formatTime(time),
             label: formatTime(time)
           }));
-          const ticketPrice = event.ticketPrice.map((price: any) => ({
+          const ticketPrice = event.ticketPrice.map((price: TicketPrice) => ({
             value: price.ticketPrice as unknown as string,
             label: price.ticketPrice as unknown as string
           }));

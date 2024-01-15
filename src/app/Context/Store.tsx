@@ -15,6 +15,8 @@ interface ContextProps {
     setEventId: Dispatch<SetStateAction<string>>
     ticketPrice: string,
     setTicketPrice:Dispatch<SetStateAction<string>>
+    ticketPriceId:string,
+    setTicketPriceId:Dispatch<SetStateAction<string>>
     quantity: number | null,
     setQuantity: Dispatch<SetStateAction<number | null>>
     location: string,
@@ -38,6 +40,8 @@ const GlobalContext = createContext<ContextProps>({
     setEventId: (): string => '',
     ticketPrice: '',
     setTicketPrice: (): string => '',
+    ticketPriceId: '',
+    setTicketPriceId: (): string => '',
     quantity: null,
     setQuantity: (): string => '',
     location: '',
@@ -59,6 +63,7 @@ export const GlobalContextProvider = ({children}: any) => {
     const [location, setLocation] = useState('');
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
+    const [ticketPriceId, setTicketPriceId] = useState('');
 
     return (
         <GlobalContext.Provider value={
@@ -74,6 +79,8 @@ export const GlobalContextProvider = ({children}: any) => {
             setEventId,
             ticketPrice,
             setTicketPrice,
+            ticketPriceId,
+            setTicketPriceId,
             quantity,
             setQuantity,
             time,

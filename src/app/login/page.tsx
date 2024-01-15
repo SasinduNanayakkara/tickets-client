@@ -22,7 +22,10 @@ function Login() {
     setRefreshToken,
     eventId,
     ticketPrice,
-    quantity
+    quantity,
+    date,
+    time,
+    location
   } = useGlobalContext();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -57,7 +60,7 @@ function Login() {
         
         if (search === 'true') {
           // router.push("/tickets");
-          const sessionUrl = await createPayment(eventId, ticketPrice, quantity as number, result?.userId as string);
+          const sessionUrl = await createPayment(eventId, ticketPrice, quantity as number, result?.userId as string, date, time, location, result.accessToken);
           console.log("sessionUrl ", sessionUrl);
           router.push(sessionUrl?.data.data as any);
         }

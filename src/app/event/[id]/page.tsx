@@ -11,6 +11,7 @@ import { getEventsById } from "@/app/api/Events";
 import { Event, TicketPrice } from "@/app/Types/Events";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/app/Context/Store";
+import { createPayment } from "@/app/api/Pyament";
 
 function SingleEventPage({
   params: {id}, 
@@ -24,12 +25,18 @@ function SingleEventPage({
     userId, 
     accessToken, 
     setEventId, 
-    setQuantity, 
+    setQuantity,
+    quantity,
     setTicketPrice,
+    ticketPrice,
     setTicketPriceId,
     setLocation,
     setDate,
+    date,
+    time,
     setTime,
+    location,
+
   } = useGlobalContext();
 
   if (!userId && !accessToken) {
@@ -88,8 +95,9 @@ function SingleEventPage({
   const handleTicketBuy = async () => {
     try {
       if(userId != "") {
-  
-        router.push("/tickets");
+        const sessionUrl = await createPayment(eventData?._id as string, ticketPrice, quantity as number, userId as string, date, time, location, accessToken);
+          console.log("sessionUrl ", sessionUrl);
+          router.push(sessionUrl?.data.data as any);
       }
       else {
         router.push("/login?tickets=true");

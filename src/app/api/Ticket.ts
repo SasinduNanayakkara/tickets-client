@@ -43,3 +43,17 @@ export const ticketDownload = async (eventImage: string, paymentRef: string, loc
         console.log(err);
     }
 }
+
+export const getTicketDetailsByUser = async (userId: string, accessToken: string) => {
+    try {
+        const result = await axios.get(`${baseUrl}/ticket/user/${userId}`, {headers: {
+            Authorization: `Bearer ${accessToken}`
+        }});
+        console.log("ticket details $$", result);
+        
+        return result.data.data;
+    }
+    catch(err) {
+        console.log(err);
+    }
+}

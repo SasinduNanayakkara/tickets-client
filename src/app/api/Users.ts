@@ -64,3 +64,50 @@ export const getUserById = async (id: string) => {
         
     }
 }
+
+export const forgotPassword = async (email: string) => {
+    try {
+        const result = await axios.post(`${baseUrl}/auth/forgot-password`, {
+            email: email
+        });
+        if(result) {
+            console.log(result.data);
+            return result.data.data;
+        }
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+export const validateOtp = async (email: string, otp: string) => {
+    try {
+        const result = await axios.post(`${baseUrl}/auth/validate-otp`, {
+            email: email,
+            otp: otp
+        });
+        if(result) {
+            console.log(result.data);
+            return result.data.data;
+        }
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+export const resetPassword = async (email: string, password: string) => {
+    try {
+        const result = await axios.post(`${baseUrl}/auth/reset-password`, {
+            email: email,
+            password: password
+        });
+        if(result) {
+            console.log(result.data);
+            return result.data.data;
+        }
+    }
+    catch(err) {
+        console.log(err);
+    }
+}

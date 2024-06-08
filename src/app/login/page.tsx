@@ -96,7 +96,7 @@ function Login() {
             )}
           </div>
           <div className="mt-4">
-            <span className="text-[#E50914] underline hover:text-white">
+            <span onClick={() => router.push("/email")} className="text-[#E50914] underline hover:text-white">
               Forgot Your Password
             </span>
           </div>

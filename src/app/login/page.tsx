@@ -1,13 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, notification } from "antd";
 import { CloseCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
-import { getUserById, loginUser } from "../api/Users";
+import { getUserById, googleAuthentication, loginUser } from "../api/Users";
 import { useGlobalContext } from "../Context/Store";
 import { useRouter, useSearchParams } from "next/navigation";
 import NotificationBar from "@/Components/NotificationBar";
 import { createPayment } from "../api/Pyament";
+import Image from "next/image";
+import googleImage from "@/Assats/Google__G__logo.svg.png";
+import axios from "axios";
 // import openNotification from "@/Components/NotificationBar";
 
 function Login() {
@@ -30,6 +33,7 @@ function Login() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const search = searchParams.get('tickets');
+  const google = searchParams.get('google');
   const [api, contextHolder] = notification.useNotification();
 
   if (!userId && !accessToken) {
@@ -43,6 +47,25 @@ function Login() {
       icon: type === 'success' ? <CheckCircleOutlined /> : <CloseCircleOutlined />
   })
   }
+
+  // useEffect(() => {
+  //   const gooleLogin = async () => {
+  //     try {
+  //       if (google === "true") {
+  //         const sessionUrl = await createPayment(eventId, ticketPrice, quantity as number, result?.userId as string, date, time, location, result.accessToken);
+  //         console.log("sessionUrl ", sessionUrl);
+  //         router.push(sessionUrl?.data.data as any);
+  //       }
+  //       else {
+  //         router.push("/");
+  //       }
+  //     }
+  //     catch(err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   gooleLogin();
+  // },[google]);
 
   const signIn = async () => {
     try {
@@ -74,6 +97,17 @@ function Login() {
     catch(err) {
       console.log("ddd", err);
       openNotification('Login Unsuccessful', '', 'error');
+    }
+  }
+
+  const handleGoogleLogin = async () => {
+    try {
+      const response = await window.open("http://localhost:5000/api/v1/auth/google", "_self");
+      // const response = await axios.get("http://localhost:5000/api/v1/auth/google", {withCredentials: true});
+      console.log("google response ", response);
+    }
+    catch(err) {
+      console.log(err);
     }
   }
 
@@ -111,13 +145,17 @@ function Login() {
           <div className="flex items-center justify-center mt-8">
             <span className="text-2xl font-bold">OR</span>
           </div>
-          <div className="flex items-center justify-center my-4">
+          <div className="flex flex-col items-center justify-center my-4">
             <Link href={"/register"}>
               <button className=" text-center px-32 bg-[#E50914] rounded-lg py-3 mt-2 font-extrabold uppercase transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-white hover:text-[#E50914] hover:rounded-lg duration-300">
                 {" "}
                 Register Now
               </button>
             </Link>
+            <div onClick={() => handleGoogleLogin()} className="flex mt-10 bg-white text-black border-2 border-[#E50914] rounded-lg px-20 items-center justify-between gap-2 font-bold py-1">
+              <Image src={googleImage} width={40} height={40} alt="google" />
+              <span className="text-lg">Sign Up with Google</span>
+            </div>
           </div>
         </div>
       </div>

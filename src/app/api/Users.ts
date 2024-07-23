@@ -111,3 +111,16 @@ export const resetPassword = async (email: string, password: string) => {
         console.log(err);
     }
 }
+
+export const googleAuthentication = async () => {
+    try {
+        const result = await axios.get(`${baseUrl}/auth/google`);
+        if(result) {
+            console.log(result.data);
+            return result.data.data;
+        }
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
